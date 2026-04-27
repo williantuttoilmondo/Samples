@@ -22,7 +22,7 @@ uses
   System.Math,
   System.SysUtils,
   Devspace.Classes.Operation.Factory,
-  Devspace.Exceptions.Operacao;
+  Devspace.Exceptions.Operation;
 
 { TPower }
 
@@ -47,8 +47,8 @@ begin
 end;
 
 initialization
-  TOperactionFactory.Instance
-                    .RegisterOperation('Power', TPower)
-                    .RegisterOperation('Root', TRoot);
+  TOperationFactory.Instance
+                   .RegisterOperation('Power', TPower)
+                   .RegisterOperation('Root', TRoot);
 
 end.

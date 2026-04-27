@@ -39,7 +39,7 @@ var
 implementation
 
 uses
-  Devspace.Classes.Operacao.Factory,
+  Devspace.Classes.Operation.Factory,
   Devspace.Helpers.TStrings;
 
 {$R *.dfm}
@@ -63,30 +63,30 @@ end;
 
 procedure TCalculator.ComboBoxLoadItems;
 begin
-  OperacaoComboBox.Items.FromArray(TOperacaoFactory.Instance.Operacoes);
+  OperationComboBox.Items.FromArray(TOperationFactory.Instance.Operations);
 end;
 
 procedure TCalculator.FormCreate(Sender: TObject);
 begin
   ComboBoxLoadItems;
-  OperacaoComboBox.ItemIndex := 0;
+  OperationComboBox.ItemIndex := 0;
 end;
 
 procedure TCalculator.GetOperationsAndDoMath;
 begin
-  TOperacaoFactory.Instance
-                  .Operacao[OperacaoComboBox.Items[OperacaoComboBox.ItemIndex]]
-                  .SetA(StrToFloat(AEdit.Text))
-                  .SetB(StrToFloat(BEdit.Text))
-                  .Efetuar
-                  .OnError(procedure(const AError: string)
-                           begin
-                             Application.MessageBox(PWideChar(AError), PWideChar(Application.Title), MB_OK or MB_ICONWARNING);
-                           end)
-                  .OnSuccess(procedure(const AResult: Double)
-                             begin
-                               ResultLabel.Caption := FloatToStr(AResult);
-                             end);
+  TOperationFactory.Instance
+                   .Operation[OperationComboBox.Items[OperationComboBox.ItemIndex]]
+                   .SetA(StrToFloat(AEdit.Text))
+                   .SetB(StrToFloat(BEdit.Text))
+                   .Calculate
+                   .OnError(procedure(const AError: string)
+                            begin
+                              Application.MessageBox(PWideChar(AError), PWideChar(Application.Title), MB_OK or MB_ICONWARNING);
+                            end)
+                   .OnSuccess(procedure(const AResult: Double)
+                              begin
+                                ResultLabel.Caption := FloatToStr(AResult);
+                              end);
 end;
 
 procedure TCalculator.FillEditsIfEmpty;

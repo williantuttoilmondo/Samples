@@ -43,7 +43,7 @@ type
     FLastError: string;
     FResult: Double;
     FSuccess: Boolean;
-    function DoEfetuar(out AResult: Double): IOperation; virtual; abstract;
+    function DoCalculate(out AResult: Double): IOperation; virtual; abstract;
   public
     constructor Create; virtual;
     function Calculate: IOperation;
@@ -58,8 +58,8 @@ implementation
 
 uses
   System.SysUtils,
-  Devspace.Consts.Operacao,
-  Devspace.Exceptions.Operacao;
+  Devspace.Consts.Operation,
+  Devspace.Exceptions.Operation;
 
 { TOnError }
 
@@ -94,7 +94,7 @@ begin
 
   try
     FSuccess := True;
-    Result := DoEfetuar(FResult);
+    Result := DoCalculate(FResult);
   except
     on E: Exception do
     begin

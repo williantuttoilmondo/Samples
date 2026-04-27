@@ -2,7 +2,7 @@ object Calculator: TCalculator
   Left = 0
   Top = 0
   BorderStyle = bsToolWindow
-  Caption = 'Calculadora com Fluent Interface'
+  Caption = 'Fluent Interface Calculator'
   ClientHeight = 120
   ClientWidth = 347
   Color = clBtnFace
@@ -21,22 +21,21 @@ object Calculator: TCalculator
   object ResultDescLabel: TLabel
     Left = 8
     Top = 95
-    Width = 65
+    Width = 42
     Height = 17
     Anchors = [akRight, akBottom]
-    Caption = 'Resultado:'
+    Caption = 'Result:'
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clWindowText
     Font.Height = -13
     Font.Name = 'Segoe UI'
     Font.Style = [fsBold]
     ParentFont = False
-    ExplicitTop = 182
   end
   object ResultLabel: TLabel
-    Left = 79
+    Left = 56
     Top = 95
-    Width = 4
+    Width = 27
     Height = 17
     Anchors = [akRight, akBottom]
     Font.Charset = DEFAULT_CHARSET
@@ -45,7 +44,6 @@ object Calculator: TCalculator
     Font.Name = 'Segoe UI'
     Font.Style = []
     ParentFont = False
-    ExplicitTop = 182
   end
   object AEdit: TLabeledEdit
     Left = 25

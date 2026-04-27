@@ -19,7 +19,7 @@ type
 implementation
 
 uses
-  Devspace.Consts.Operacao;
+  Devspace.Consts.Operation;
 
 { EDivByZeroHelper }
 

@@ -4,24 +4,24 @@ interface
 
 uses
   System.Generics.Collections,
-  Devspace.Classes.Operacao;
+  Devspace.Classes.Operation;
 
 type
   TOperations = TArray<string>;
 
   IOperationFactory = interface
   ['{16609C69-1A6D-4365-8203-EB15F8AAF682}']
-    function GetOperation(const AName: string): IOperacao;
+    function GetOperation(const AName: string): IOperation;
     function GetOperations: TOperations;
     function RegisterOperation(const AName: string; const AOperation: TOperacaoClass): IOperationFactory;
-    property Operation[const AName: string]: IOperacao read GetOperation;
-    property Operacoes: TOperations read GetOperations;
+    property Operation[const AName: string]: IOperation read GetOperation;
+    property Operations: TOperations read GetOperations;
   end;
 
   TOperationFactory = class(TInterfacedObject, IOperationFactory)
   strict private
     FOperacoes: TObjectOrderedDictionary<string, TOperacaoClass>;
-    function GetOperation(const AName: string): IOperacao;
+    function GetOperation(const AName: string): IOperation;
     function GetOperations: TOperations;
   private
     class var FInstance: IOperationFactory;
@@ -57,7 +57,7 @@ begin
   Result := FInstance;
 end;
 
-function TOperationFactory.GetOperation(const AName: string): IOperacao;
+function TOperationFactory.GetOperation(const AName: string): IOperation;
 begin
   Result := nil;
 

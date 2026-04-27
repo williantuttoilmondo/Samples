@@ -31,7 +31,7 @@ implementation
 uses
   System.SysUtils,
   Devspace.Classes.Operation.Factory,
-  Devspace.Exceptions.Operacao;
+  Devspace.Exceptions.Operation;
 
 { TAddiction }
 

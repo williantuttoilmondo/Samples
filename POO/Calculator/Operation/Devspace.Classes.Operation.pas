@@ -1,4 +1,4 @@
-unit Devspace.Classes.Operacao;
+unit Devspace.Classes.Operation;
 
 interface
 
@@ -21,19 +21,19 @@ type
     procedure OnSuccess(const ACallback: TSuccessCallback);
   end;
 
-  IOperacao = interface
+  IOperation = interface
     ['{BD5131FE-BED6-4E8C-9407-FFE8348F8DC2}']
-    function Efetuar: IOperacao;
+    function Calculate: IOperation;
     function GetA: Double;
     function GetB: Double;
     function OnError(const ACallback: TErrorCallback): IOnError;
-    function SetA(const AValue: Double): IOperacao;
-    function SetB(const AValue: Double): IOperacao;
+    function SetA(const AValue: Double): IOperation;
+    function SetB(const AValue: Double): IOperation;
     property A: Double read GetA;
     property B: Double read GetB;
   end;
 
-  TOperacao = class abstract(TInterfacedObject, IOperacao)
+  TOperation = class abstract(TInterfacedObject, IOperation)
   strict private
     function GetA: Double;
     function GetB: Double;
@@ -43,16 +43,16 @@ type
     FLastError: string;
     FResult: Double;
     FSuccess: Boolean;
-    function DoEfetuar(out AResult: Double): IOperacao; virtual; abstract;
+    function DoEfetuar(out AResult: Double): IOperation; virtual; abstract;
   public
     constructor Create; virtual;
-    function Efetuar: IOperacao;
+    function Calculate: IOperation;
     function OnError(const ACallback: TErrorCallback): IOnError;
-    function SetA(const AValue: Double): IOperacao; virtual;
-    function SetB(const AValue: Double): IOperacao; virtual;
+    function SetA(const AValue: Double): IOperation; virtual;
+    function SetB(const AValue: Double): IOperation; virtual;
   end;
 
-  TOperacaoClass = class of TOperacao;
+  TOperacaoClass = class of TOperation;
 
 implementation
 
@@ -79,15 +79,15 @@ begin
   ACallback(FResult);
 end;
 
-{ TOperacao }
+{ TOperation }
 
-constructor TOperacao.Create;
+constructor TOperation.Create;
 begin
   FA := 0;
   FB := 0;
 end;
 
-function TOperacao.Efetuar: IOperacao;
+function TOperation.Calculate: IOperation;
 begin
   FResult := 0;
   Result := Self;
@@ -104,17 +104,17 @@ begin
   end;
 end;
 
-function TOperacao.GetA: Double;
+function TOperation.GetA: Double;
 begin
   Result := FA;
 end;
 
-function TOperacao.GetB: Double;
+function TOperation.GetB: Double;
 begin
   Result := FB;
 end;
 
-function TOperacao.OnError(const ACallback: TErrorCallback): IOnError;
+function TOperation.OnError(const ACallback: TErrorCallback): IOnError;
 begin
   Result := TOnError.Create(FSuccess, FResult);
 
@@ -129,7 +129,7 @@ begin
   end;
 end;
 
-function TOperacao.SetA(const AValue: Double): IOperacao;
+function TOperation.SetA(const AValue: Double): IOperation;
 begin
   Result := Self;
 
@@ -141,7 +141,7 @@ begin
   FA := AValue;
 end;
 
-function TOperacao.SetB(const AValue: Double): IOperacao;
+function TOperation.SetB(const AValue: Double): IOperation;
 begin
   Result := Self;
 

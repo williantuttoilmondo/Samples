@@ -6,10 +6,10 @@
         <Base>True</Base>
         <Config Condition="'$(Config)'==''">Debug</Config>
         <Platform Condition="'$(Platform)'==''">Win64</Platform>
-        <ProjectName Condition="'$(ProjectName)'==''">CalculadoraComFluentInterface</ProjectName>
+        <ProjectName Condition="'$(ProjectName)'==''">FluentInterfaceCalculator</ProjectName>
         <TargetedPlatforms>2</TargetedPlatforms>
         <AppType>Application</AppType>
-        <MainSource>CalculadoraComFluentInterface.dpr</MainSource>
+        <MainSource>FluentInterfaceCalculator.dpr</MainSource>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
         <Base>true</Base>
@@ -70,7 +70,7 @@
         <Icon_MainIcon>$(BDS)\bin\delphi_PROJECTICON.ico</Icon_MainIcon>
         <UWP_DelphiLogo44>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_44.png</UWP_DelphiLogo44>
         <UWP_DelphiLogo150>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_150.png</UWP_DelphiLogo150>
-        <SanitizedProjectName>CalculadoraComFluentInterface</SanitizedProjectName>
+        <SanitizedProjectName>FluentInterfaceCalculator</SanitizedProjectName>
         <VerInfo_Locale>1046</VerInfo_Locale>
         <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProgramID=com.embarcadero.$(MSBuildProjectName);ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
     </PropertyGroup>
@@ -127,15 +127,14 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="Operacao\Devspace.Classes.Operacao.pas"/>
-        <DCCReference Include="Operacao\Devspace.Classes.Operacao.Basicas.pas"/>
-        <DCCReference Include="Operacao\Devspace.Classes.Operacao.Factory.pas"/>
-        <DCCReference Include="Operacao\Devspace.Classes.Operacao.Potencia.pas"/>
-        <DCCReference Include="Operacao\Devspace.Consts.Operacao.pas"/>
-        <DCCReference Include="Operacao\Devspace.Exceptions.Operacao.pas"/>
-        <DCCReference Include="Calculadora\Devspace.Forms.Calculadora.pas">
-            <Form>Calculadora</Form>
-            <FormType>dfm</FormType>
+        <DCCReference Include="Operation\Devspace.Classes.Operation.pas"/>
+        <DCCReference Include="Operation\Devspace.Classes.Operation.Basics.pas"/>
+        <DCCReference Include="Operation\Devspace.Classes.Operation.Factory.pas"/>
+        <DCCReference Include="Operation\Devspace.Classes.Operation.Power.pas"/>
+        <DCCReference Include="Operation\Devspace.Consts.Operation.pas"/>
+        <DCCReference Include="Operation\Devspace.Exceptions.Operation.pas"/>
+        <DCCReference Include="Calculator\Devspace.Forms.Calculator.pas">
+            <Form>Calculator</Form>
         </DCCReference>
         <DCCReference Include="Helpers\Devspace.Helpers.TStrings.pas"/>
         <BuildConfiguration Include="Base">
@@ -156,7 +155,7 @@
         <BorlandProject>
             <Delphi.Personality>
                 <Source>
-                    <Source Name="MainSource">CalculadoraComFluentInterface.dpr</Source>
+                    <Source Name="MainSource">FluentInterfaceCalculator.dpr</Source>
                 </Source>
                 <Excluded_Packages>
                     <Excluded_Packages Name="$(BDSBIN)\dcloffice2k290.bpl">Microsoft Office 2000 Sample Automation Server Wrapper Components</Excluded_Packages>
@@ -164,21 +163,21 @@
                 </Excluded_Packages>
             </Delphi.Personality>
             <Deployment Version="5">
-                <DeployFile LocalName="Win32\Debug\bin\CalculadoraComFluentInterface.exe" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="Win32\Debug\bin\FluentInterfaceCalculator.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win32">
-                        <RemoteName>CalculadoraComFluentInterface.exe</RemoteName>
+                        <RemoteName>FluentInterfaceCalculator.exe</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Win64\Debug\bin\CalculadoraComFluentInterface.exe" Configuration="Debug" Class="ProjectOutput">
+                <DeployFile LocalName="Win64\Debug\bin\FluentInterfaceCalculator.exe" Configuration="Debug" Class="ProjectOutput">
                     <Platform Name="Win64">
-                        <RemoteName>CalculadoraComFluentInterface.exe</RemoteName>
+                        <RemoteName>FluentInterfaceCalculator.exe</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>
-                <DeployFile LocalName="Win64\Debug\bin\CalculadoraComFluentInterface.rsm" Configuration="Debug" Class="DebugSymbols">
+                <DeployFile LocalName="Win64\Debug\bin\FluentInterfaceCalculator.rsm" Configuration="Debug" Class="DebugSymbols">
                     <Platform Name="Win64">
-                        <RemoteName>CalculadoraComFluentInterface.rsm</RemoteName>
+                        <RemoteName>FluentInterfaceCalculator.rsm</RemoteName>
                         <Overwrite>true</Overwrite>
                     </Platform>
                 </DeployFile>

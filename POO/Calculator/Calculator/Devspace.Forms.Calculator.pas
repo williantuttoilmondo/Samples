@@ -1,4 +1,4 @@
-unit Devspace.Forms.Calculadora;
+unit Devspace.Forms.Calculator;
 
 interface
 
@@ -17,20 +17,24 @@ uses
   Vcl.Mask;
 
 type
-  TCalculadora = class(TForm)
+  TCalculator = class(TForm)
     AEdit: TLabeledEdit;
     BEdit: TLabeledEdit;
-    CalcularButton: TButton;
-    ResultadoDescLabel: TLabel;
-    ResultadoLabel: TLabel;
-    OperacaoComboBox: TComboBox;
+    CalculateButton: TButton;
+    ResultDescLabel: TLabel;
+    ResultLabel: TLabel;
+    OperationComboBox: TComboBox;
     procedure FormCreate(Sender: TObject);
-    procedure CalcularButtonClick(Sender: TObject);
+    procedure CalculateButtonClick(Sender: TObject);
     procedure AEditKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
+  strict private
+    procedure ComboBoxLoadItems;
+    procedure GetOperationsAndDoMath;
+    procedure FillEditsIfEmpty;
   end;
 
 var
-  Calculadora: TCalculadora;
+  Calculator: TCalculator;
 
 implementation
 
@@ -40,7 +44,7 @@ uses
 
 {$R *.dfm}
 
-procedure TCalculadora.AEditKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
+procedure TCalculator.AEditKeyUp(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
   case Key of
     VK_RETURN:
@@ -51,21 +55,25 @@ begin
   end;
 end;
 
-procedure TCalculadora.CalcularButtonClick(Sender: TObject);
-  procedure PreencheCamposSeVazios;
-  begin
-    if AEdit.Text = EmptyStr then
-    begin
-      AEdit.Text := '0';
-    end;
-
-    if BEdit.Text = EmptyStr then
-    begin
-      BEdit.Text := '1';
-    end;
-  end;
+procedure TCalculator.CalculateButtonClick(Sender: TObject);
 begin
-  PreencheCamposSeVazios;
+  FillEditsIfEmpty;
+  GetOperationsAndDoMath;
+end;
+
+procedure TCalculator.ComboBoxLoadItems;
+begin
+  OperacaoComboBox.Items.FromArray(TOperacaoFactory.Instance.Operacoes);
+end;
+
+procedure TCalculator.FormCreate(Sender: TObject);
+begin
+  ComboBoxLoadItems;
+  OperacaoComboBox.ItemIndex := 0;
+end;
+
+procedure TCalculator.GetOperationsAndDoMath;
+begin
   TOperacaoFactory.Instance
                   .Operacao[OperacaoComboBox.Items[OperacaoComboBox.ItemIndex]]
                   .SetA(StrToFloat(AEdit.Text))
@@ -77,14 +85,21 @@ begin
                            end)
                   .OnSuccess(procedure(const AResult: Double)
                              begin
-                               ResultadoLabel.Caption := FloatToStr(AResult);
+                               ResultLabel.Caption := FloatToStr(AResult);
                              end);
 end;
 
-procedure TCalculadora.FormCreate(Sender: TObject);
+procedure TCalculator.FillEditsIfEmpty;
 begin
-  OperacaoComboBox.Items.FromArray(TOperacaoFactory.Instance.Operacoes);
-  OperacaoComboBox.ItemIndex := 0;
+  if AEdit.Text = EmptyStr then
+  begin
+    AEdit.Text := '0';
+  end;
+
+  if BEdit.Text = EmptyStr then
+  begin
+    BEdit.Text := '1';
+  end;
 end;
 
 end.

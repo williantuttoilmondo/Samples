@@ -88,7 +88,6 @@ object Calculadora: TCalculadora
     Caption = '&Calcular'
     TabOrder = 3
     OnClick = CalcularButtonClick
-    ExplicitHeight = 168
   end
   object OperacaoComboBox: TComboBox
     Left = 25

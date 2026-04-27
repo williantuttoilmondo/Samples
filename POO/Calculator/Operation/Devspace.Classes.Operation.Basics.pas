@@ -73,7 +73,7 @@ end;
 
 initialization
   TOperationFactory.Instance
-                   .RegisterOperation('Adiction', TAddiction)
+                   .RegisterOperation('Addiction', TAddiction)
                    .RegisterOperation('Subtraction', TSubtraction)
                    .RegisterOperation('Multiplication', TMultiplication)
                    .RegisterOperation('Division', TDivision);

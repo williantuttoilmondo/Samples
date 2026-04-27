@@ -6,7 +6,7 @@ uses
   Devspace.Classes.Operation;
 
 type
-  TAddiction = class(TOperation)
+  TAddition = class(TOperation)
   strict protected
     function DoCalculate(out AResult: Double): IOperation; override;
   end;
@@ -33,9 +33,9 @@ uses
   Devspace.Classes.Operation.Factory,
   Devspace.Exceptions.Operation;
 
-{ TAddiction }
+{ TAddition }
 
-function TAddiction.DoCalculate(out AResult: Double): IOperation;
+function TAddition.DoCalculate(out AResult: Double): IOperation;
 begin
   Result := Self;
   AResult := FA + FB;
@@ -73,7 +73,7 @@ end;
 
 initialization
   TOperationFactory.Instance
-                   .RegisterOperation('Addiction', TAddiction)
+                   .RegisterOperation('Addition', TAddition)
                    .RegisterOperation('Subtraction', TSubtraction)
                    .RegisterOperation('Multiplication', TMultiplication)
                    .RegisterOperation('Division', TDivision);

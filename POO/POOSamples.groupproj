@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{1ADCA8C8-5B6C-4858-A1F8-ED22AC68290B}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="Callback Pattern\CallbackPatternCalculator.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="Fluent Interface\FluentInterfaceCalculator.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="CallbackPatternCalculator">
+        <MSBuild Projects="Callback Pattern\CallbackPatternCalculator.dproj"/>
+    </Target>
+    <Target Name="CallbackPatternCalculator:Clean">
+        <MSBuild Projects="Callback Pattern\CallbackPatternCalculator.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="CallbackPatternCalculator:Make">
+        <MSBuild Projects="Callback Pattern\CallbackPatternCalculator.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="FluentInterfaceCalculator">
+        <MSBuild Projects="Fluent Interface\FluentInterfaceCalculator.dproj"/>
+    </Target>
+    <Target Name="FluentInterfaceCalculator:Clean">
+        <MSBuild Projects="Fluent Interface\FluentInterfaceCalculator.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="FluentInterfaceCalculator:Make">
+        <MSBuild Projects="Fluent Interface\FluentInterfaceCalculator.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="CallbackPatternCalculator;FluentInterfaceCalculator"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="CallbackPatternCalculator:Clean;FluentInterfaceCalculator:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="CallbackPatternCalculator:Make;FluentInterfaceCalculator:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

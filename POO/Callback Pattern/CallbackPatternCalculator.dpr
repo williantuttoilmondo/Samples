@@ -17,8 +17,8 @@ uses
 begin
   ReportMemoryLeaksOnShutdown := True;
   Application.Title := 'Callback Pattern Calculator';
-  Application.CreateForm(TCalculator, Calculator);
   Application.Initialize;
+  TCalculator.Open;
   Application.MainFormOnTaskbar := True;
   Application.Run;
 end.

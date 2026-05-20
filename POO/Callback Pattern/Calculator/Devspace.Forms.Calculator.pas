@@ -31,10 +31,9 @@ type
     procedure ComboBoxLoadItems;
     procedure GetOperationAndDoMath;
     procedure FillEditsIfEmpty;
+  public
+    class procedure Open;
   end;
-
-var
-  Calculator: TCalculator;
 
 implementation
 
@@ -89,18 +88,27 @@ begin
                              end);
 end;
 
+class procedure TCalculator.Open;
+var
+  Instance: TCalculator;
+begin
+  Application.CreateForm(TCalculator, Instance);
+end;
+
 procedure TCalculator.FillEditsIfEmpty;
+const
+  DefaultValueA = '0';
+  DefaultValueB = '1';
 begin
   if AEdit.Text = EmptyStr then
   begin
-    AEdit.Text := '0';
+    AEdit.Text := DefaultValueA;
   end;
 
   if BEdit.Text = EmptyStr then
   begin
-    BEdit.Text := '1';
+    BEdit.Text := DefaultValueB;
   end;
 end;
 
 end.
-

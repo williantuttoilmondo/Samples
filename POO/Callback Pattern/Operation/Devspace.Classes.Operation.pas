@@ -32,7 +32,7 @@ type
     function SetB(const AValue: Double): IOperation; virtual;
   end;
 
-  TOperacaoClass = class of TOperation;
+  TOperationClass = class of TOperation;
 
 implementation
 

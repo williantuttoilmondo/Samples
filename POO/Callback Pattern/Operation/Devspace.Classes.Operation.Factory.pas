@@ -13,14 +13,14 @@ type
   ['{16609C69-1A6D-4365-8203-EB15F8AAF682}']
     function GetOperation(const AName: string): IOperation;
     function GetOperations: TOperations;
-    function RegisterOperation(const AName: string; const AOperation: TOperacaoClass): IOperationFactory;
+    function RegisterOperation(const AName: string; const AOperation: TOperationClass): IOperationFactory;
     property Operation[const AName: string]: IOperation read GetOperation;
     property Operations: TOperations read GetOperations;
   end;
 
   TOperationFactory = class(TInterfacedObject, IOperationFactory)
   strict private
-    FOperacoes: TObjectOrderedDictionary<string, TOperacaoClass>;
+    FOperations: TObjectOrderedDictionary<string, TOperationClass>;
     function GetOperation(const AName: string): IOperation;
     function GetOperations: TOperations;
   private
@@ -29,7 +29,7 @@ type
   public
     destructor Destroy; override;
     class function Instance: IOperationFactory;
-    function RegisterOperation(const AName: string; const AOperation: TOperacaoClass): IOperationFactory;
+    function RegisterOperation(const AName: string; const AOperation: TOperationClass): IOperationFactory;
   end;
 
 implementation
@@ -38,12 +38,12 @@ implementation
 
 constructor TOperationFactory.Create;
 begin
-  FOperacoes := TObjectOrderedDictionary<string, TOperacaoClass>.Create;
+  FOperations := TObjectOrderedDictionary<string, TOperationClass>.Create;
 end;
 
 destructor TOperationFactory.Destroy;
 begin
-  FOperacoes.Free;
+  FOperations.Free;
   inherited;
 end;
 
@@ -61,26 +61,29 @@ function TOperationFactory.GetOperation(const AName: string): IOperation;
 begin
   Result := nil;
 
-  if not FOperacoes.ContainsKey(AName) then
+  if not FOperations.ContainsKey(AName) then
   begin
     Exit;
   end;
 
-  Result := FOperacoes[AName].Create;
+  Result := FOperations[AName].Create;
 end;
 
 function TOperationFactory.GetOperations: TOperations;
 begin
-  Result := FOperacoes.Keys.ToArray;
+  Result := FOperations.Keys.ToArray;
 end;
 
-function TOperationFactory.RegisterOperation(const AName: string; const AOperation: TOperacaoClass): IOperationFactory;
+function TOperationFactory.RegisterOperation(const AName: string; const AOperation: TOperationClass): IOperationFactory;
 begin
   Result := Self;
-  FOperacoes.AddOrSetValue(AName, AOperation);
+  FOperations.AddOrSetValue(AName, AOperation);
 end;
 
 initialization
+  TOperationFactory.FInstance := nil;
+
+finalization
   TOperationFactory.FInstance := nil;
 
 end.

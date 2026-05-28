@@ -130,18 +130,17 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="Operation\Devspace.Classes.Operation.pas"/>
-        <DCCReference Include="Operation\Devspace.Classes.Operation.Basics.pas"/>
-        <DCCReference Include="Operation\Devspace.Classes.Operation.Factory.pas"/>
-        <DCCReference Include="Operation\Devspace.Classes.Operation.Power.pas"/>
-        <DCCReference Include="Operation\Devspace.Consts.Operation.pas"/>
+        <DCCReference Include="Contracts\Devspace.Classes.Operation.pas"/>
+        <DCCReference Include="Domain\Devspace.Classes.Operation.Basics.pas"/>
+        <DCCReference Include="Service\Devspace.Classes.Operation.Factory.pas"/>
+        <DCCReference Include="Domain\Devspace.Classes.Operation.Power.pas"/>
         <DCCReference Include="Operation\Devspace.Exceptions.Operation.pas"/>
-        <DCCReference Include="Calculator\Devspace.Forms.Calculator.pas">
+        <DCCReference Include="Presentation\Devspace.Forms.Calculator.pas">
             <Form>Calculator</Form>
             <FormType>dfm</FormType>
         </DCCReference>
         <DCCReference Include="Helpers\Devspace.Helpers.TStrings.pas"/>
-        <DCCReference Include="Operation\Devspace.Classes.Operation.Facade.pas"/>
+        <DCCReference Include="Service\Devspace.Classes.Operation.Facade.pas"/>
         <BuildConfiguration Include="Base">
             <Key>Base</Key>
         </BuildConfiguration>

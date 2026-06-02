@@ -77,7 +77,6 @@ begin
   TOperationFacade.New(OperationComboBox.Text)
                   .SetA(StrToFloat(AEdit.Text))
                   .SetB(StrToFloat(BEdit.Text))
-                  .Calculate
                   .OnError(procedure(const AError: string)
                            begin
                              Application.MessageBox(PWideChar(AError), PWideChar(Application.Title), MB_OK or MB_ICONWARNING);
@@ -85,7 +84,9 @@ begin
                   .OnSuccess(procedure(const AResult: Double)
                              begin
                                ResultLabel.Caption := FloatToStr(AResult);
-                             end);
+                             end)
+                  .Execute
+                  .Calculate;
 end;
 
 class procedure TCalculator.Open;

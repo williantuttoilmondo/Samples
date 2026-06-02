@@ -6,43 +6,36 @@ type
   TErrorCallback = reference to procedure(const AError: string);
   TSuccessCallback = reference to procedure(const AResult: Double);
 
-  IOnSuccess = interface
-  ['{CA28A782-FD8C-4D34-9E85-11F7AE0F17B1}']
-    procedure OnSuccess(const ACallback: TSuccessCallback);
-  end;
-
-  TOnSuccess = class(TInterfacedObject, IOnSuccess)
-  strict private
-    FResult: Double;
-    FSuccess: Boolean;
-  private
-    constructor Create(const ASuccess: Boolean; const AResult: Double);
-  public
-    procedure OnSuccess(const ACallback: TSuccessCallback);
+  IOperationExecutor = interface
+  ['{082073C3-3F8E-4C74-A9F8-E66A4207BED6}']
+    procedure Calculate;
   end;
 
   IOperationFacade = interface
   ['{D135285E-3755-4094-B416-7BCD228E06D0}']
-    function Calculate: IOperationFacade;
-    function OnError(const ACallback: TErrorCallback): IOnSuccess;
+    function Execute: IOperationExecutor;
+    function OnError(const ACallback: TErrorCallback): IOperationFacade;
+    function OnSuccess(const ACallback: TSuccessCallback): IOperationFacade;
     function SetA(const AValue: Double): IOperationFacade;
     function SetB(const AValue: Double): IOperationFacade;
   end;
 
-  TOperationFacade = class(TInterfacedObject, IOperationFacade)
+  TOperationFacade = class(TInterfacedObject, IOperationFacade, IOperationExecutor)
   strict private
     FA: Double;
     FB: Double;
-    FLastError: string;
+    FOnError: TErrorCallback;
+    FOnSuccess: TSuccessCallback;
     FOperation: string;
     FResult: Double;
-    FSuccess: Boolean;
   private
     constructor Create(const AOperation: string);
   public
     class function New(const AOperation: string): IOperationFacade;
-    function Calculate: IOperationFacade;
-    function OnError(const ACallback: TErrorCallback): IOnSuccess;
+    procedure Calculate;
+    function Execute: IOperationExecutor;
+    function OnError(const ACallback: TErrorCallback): IOperationFacade;
+    function OnSuccess(const ACallback: TSuccessCallback): IOperationFacade;
     function SetA(const AValue: Double): IOperationFacade;
     function SetB(const AValue: Double): IOperationFacade;
   end;
@@ -55,24 +48,6 @@ uses
   Devspace.Consts.Operation,
   Devspace.Exceptions.Operation;
 
-{ TOnSuccess }
-
-constructor TOnSuccess.Create(const ASuccess: Boolean; const AResult: Double);
-begin
-  FResult := AResult;
-  FSuccess := ASuccess;
-end;
-
-procedure TOnSuccess.OnSuccess(const ACallback: TSuccessCallback);
-begin
-  if not (Assigned(ACallback) and FSuccess) then
-  begin
-    Exit;
-  end;
-
-  ACallback(FResult);
-end;
-
 { TOperationFacade }
 
 constructor TOperationFacade.Create(const AOperation: string);
@@ -80,44 +55,62 @@ begin
   FOperation := AOperation;
 end;
 
+function TOperationFacade.Execute: IOperationExecutor;
+begin
+  Result := Self;
+end;
+
 class function TOperationFacade.New(const AOperation: string): IOperationFacade;
 begin
   Result := TOperationFacade.Create(AOperation);
 end;
 
-function TOperationFacade.Calculate: IOperationFacade;
+procedure TOperationFacade.Calculate;
 begin
-  Result := Self;
-  FSuccess := False;
-
   try
     TOperationFactory.Instance
                      .Operation[FOperation]
                      .SetA(FA)
                      .SetB(FB)
                      .Calculate(FResult);
-    FSuccess := True;
+
+    case Assigned(FOnSuccess) of
+      True : FOnSuccess(FResult);
+      False: EOnSuccessException.RaiseOnSuccessCallbackNotAssignedException;
+    end;
   except
     on E: Exception do
     begin
-      FLastError := Format(DefaultExceptionMessage, [E.ClassName, E.Message]);
+      case Assigned(FOnError) of
+        True : FOnError(Format(DefaultExceptionMessage, [E.ClassName, E.Message]));
+        False: raise;
+      end;
     end;
   end;
 end;
 
-function TOperationFacade.OnError(const ACallback: TErrorCallback): IOnSuccess;
+function TOperationFacade.OnError(const ACallback: TErrorCallback): IOperationFacade;
 begin
+  Result := Self;
+
   if not Assigned(ACallback) then
   begin
     EOnErrorException.RaiseOnErrorCallbackNotAssignedException;
   end;
 
-  Result := TOnSuccess.Create(FSuccess, FResult);
+  FOnError := ACallback;
+end;
 
-  if not FSuccess then
+function TOperationFacade.OnSuccess(const ACallback: TSuccessCallback): IOperationFacade;
+begin
+  Result := Self;
+
+  if not Assigned(ACallback) then
   begin
-    ACallback(FLastError);
+    EOnSuccessException.RaiseOnSuccessCallbackNotAssignedException;
   end;
+
+  FOnSuccess := ACallback;
 end;
 
 function TOperationFacade.SetA(const AValue: Double): IOperationFacade;

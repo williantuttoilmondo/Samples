@@ -16,6 +16,11 @@ type
     class procedure RaiseOnErrorCallbackNotAssignedException;
   end;
 
+  EOnSuccessException = class(Exception)
+  public
+    class procedure RaiseOnSuccessCallbackNotAssignedException;
+  end;
+
 implementation
 
 uses
@@ -33,6 +38,13 @@ end;
 class procedure EOnErrorException.RaiseOnErrorCallbackNotAssignedException;
 begin
   raise EOnErrorException.Create(ErrorCallbackNotAssignedMessage);
+end;
+
+{ EOnSuccessException }
+
+class procedure EOnSuccessException.RaiseOnSuccessCallbackNotAssignedException;
+begin
+  raise EOnSuccessException.Create(SuccessCallbackNotAssignedMessage);
 end;
 
 end.

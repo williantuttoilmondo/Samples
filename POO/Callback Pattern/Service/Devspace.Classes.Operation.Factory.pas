@@ -20,7 +20,7 @@ type
 
   TOperationFactory = class(TInterfacedObject, IOperationFactory)
   strict private
-    FOperations: TObjectOrderedDictionary<string, TOperationClass>;
+    FOperations: TOrderedDictionary<string, TOperationClass>;
     function GetOperation(const AName: string): IOperation;
     function GetOperations: TOperations;
   private
@@ -38,7 +38,7 @@ implementation
 
 constructor TOperationFactory.Create;
 begin
-  FOperations := TObjectOrderedDictionary<string, TOperationClass>.Create;
+  FOperations := TOrderedDictionary<string, TOperationClass>.Create;
 end;
 
 destructor TOperationFactory.Destroy;

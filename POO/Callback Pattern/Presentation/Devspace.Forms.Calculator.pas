@@ -85,7 +85,7 @@ begin
                              begin
                                ResultLabel.Caption := FloatToStr(AResult);
                              end)
-                  .Execute
+                  .Command
                   .Calculate;
 end;
 

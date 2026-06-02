@@ -13,7 +13,7 @@ type
 
   IOperationFacade = interface
   ['{D135285E-3755-4094-B416-7BCD228E06D0}']
-    function Execute: IOperationExecutor;
+    function Command: IOperationExecutor;
     function OnError(const ACallback: TErrorCallback): IOperationFacade;
     function OnSuccess(const ACallback: TSuccessCallback): IOperationFacade;
     function SetA(const AValue: Double): IOperationFacade;
@@ -33,7 +33,7 @@ type
   public
     class function New(const AOperation: string): IOperationFacade;
     procedure Calculate;
-    function Execute: IOperationExecutor;
+    function Command: IOperationExecutor;
     function OnError(const ACallback: TErrorCallback): IOperationFacade;
     function OnSuccess(const ACallback: TSuccessCallback): IOperationFacade;
     function SetA(const AValue: Double): IOperationFacade;
@@ -52,10 +52,12 @@ uses
 
 constructor TOperationFacade.Create(const AOperation: string);
 begin
+  FOnError := nil;
+  FOnSuccess := nil;
   FOperation := AOperation;
 end;
 
-function TOperationFacade.Execute: IOperationExecutor;
+function TOperationFacade.Command: IOperationExecutor;
 begin
   Result := Self;
 end;

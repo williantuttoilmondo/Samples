@@ -2,7 +2,7 @@ object Calculator: TCalculator
   Left = 0
   Top = 0
   BorderStyle = bsToolWindow
-  Caption = 'Fluent Interface Calculator'
+  Caption = 'Callback Pattern Calculator'
   ClientHeight = 120
   ClientWidth = 347
   Color = clBtnFace
